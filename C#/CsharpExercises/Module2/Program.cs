@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Module2
 {
@@ -28,7 +29,19 @@ namespace Module2
 
         private static void PlayingWithRegex()
         {
-            Console.WriteLine("Doing Regex stuff");
+            string zipCode = "444 44";
+            string pattern = @"\d\d\d\s\d\d";
+
+            Match match = Regex.Match(zipCode, pattern);
+
+            if (match.Success)
+            {
+                Console.WriteLine("Valid zipcode");
+            }
+            else
+            {
+                Console.WriteLine("Unvalid zipcode!");
+            }
         }
 
         private static void ReadAndWriteFromFile()
