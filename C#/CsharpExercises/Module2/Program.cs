@@ -10,6 +10,8 @@ namespace Module2
         static void Main(string[] args)
         {
 
+            PlayingWithRegex();
+
             //WhatsYourName();
 
             //WhatsYourName_WithTypes();
@@ -22,6 +24,11 @@ namespace Module2
 
             //ReadAndWriteFromFile(); BONUS
 
+        }
+
+        private static void PlayingWithRegex()
+        {
+            Console.WriteLine("Doing Regex stuff");
         }
 
         private static void ReadAndWriteFromFile()
