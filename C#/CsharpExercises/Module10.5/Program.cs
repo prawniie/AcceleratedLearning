@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Module10._5
 {
@@ -10,14 +11,6 @@ namespace Module10._5
             Dictionary<int, string> products = BuildProductDictionary();
             DisplayProductDictionary(products);
 
-            //Har ej lagt till om produktlistan innehåller samma ID 
-
-            //Console.WriteLine($"{priceCategories['A']}");
-
-            //if (priceCategories.ContainsKey('B'))
-            //{
-            //    Console.WriteLine("Det finns en kategori som heter B");
-            //}
         }
 
 
@@ -30,16 +23,55 @@ namespace Module10._5
             Console.Write("Enter product id and name: ");
             string input = Console.ReadLine();
 
+                if (ValidInput(input) || string.IsNullOrWhiteSpace(input))
+                {
+                 input = input.Trim();   
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Invalid input!");
+                    Console.ResetColor();
+                    continue;
+                }
+                
                 if (string.IsNullOrWhiteSpace(input))
                 {
-                    break;
+                    return products;
                 }
 
             string[] idAndName = input.Split(',');
             int key = int.Parse(idAndName[0]);
-            products.Add(key, idAndName[1]);
+            string productName = idAndName[1];
+
+                if (products.ContainsKey(key))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("There is already a product with this key!");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    products.Add(key, productName);
+                }
             }
-            return products;
+            
+
+        }
+
+        private static bool ValidInput(string input)
+        {
+            //Det är något knasigt med min Regex kod.."
+            string pattern = @"^\d+,\s?[a-zA-Z]+$";
+            Match match = Regex.Match(input, pattern);
+            if (match.Success)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
         }
 
