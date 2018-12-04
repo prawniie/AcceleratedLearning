@@ -48,23 +48,38 @@ namespace Module8._3
             
             string[] animals = animalString.Split(',');
 
-            //Tar bort mellanslag "Clean up array"
+            CleanUpArray(animals);
+
+            CheckIfAnimalContainsTooManyLetters(animals);
+
+            CheckIfAnimalContainsValidCharacters(animals);
+
+            return animals;
+
+        }
+
+        private static void CleanUpArray(string[] animals)
+        {
             for (var i = 0; i < animals.Length; i++)
             {
                 animals[i] = animals[i].Trim();
-            }            
+            }
+        }
 
-            //Kollar om något djur innehåller mer än 20 bokstäver
+        private static void CheckIfAnimalContainsTooManyLetters(string[] animals)
+        {
             foreach (var animal in animals)
             {
-                if (animal.Length>20)
+                if (animal.Length > 20)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     throw new ArgumentException($"{animal} has more than 20 letters!");
                 }
             }
+        }
 
-            //Kollar om något djur innehåller andra tecken än bokstäver
+        private static void CheckIfAnimalContainsValidCharacters(string[] animals)
+        {
             foreach (var animal in animals)
             {
                 string pattern = @"^[a-zåäöA-ZÅÄÖ]+$";
@@ -77,18 +92,6 @@ namespace Module8._3
                 }
             }
             Console.ResetColor();
-
-            //ERIKAS SÄTT ATT SKRIVA =) 
-            //Regex reg = new Regex(@"^[a-zA-Z]+$");
-
-            //if (!reg.Match(animalString).Success)
-            //{
-            //    throw new ArgumentException($"{animal} contains invalid letters!");
-
-            //}
-
-            return animals;
-
         }
 
         private static void CheckIfStringIsEmpty(string animalString)
