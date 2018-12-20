@@ -1,4 +1,4 @@
-use Chinook
+--use Chinook
 
 --2)
 --select * from Artist
@@ -231,3 +231,52 @@ use Chinook
 --select *
 --from AlbumReview
 --where AlbumId = 16
+
+--)EXTRA 3
+--Gör en backup av databasen Chinook till en fil. Ta bort alla spellistor. Skriv en sql-fråga för att visa att spellistorna är borta
+--Gör sedan en restore av databasen så spellistorna kommer tillbaka. Skriv en sql-fråga för att visa att spellistorna är tillbaka
+
+--BACKUP DATABASE Chinook
+--TO DISK = 'C:\TMP\testDB.bak';
+
+--alter table PlayListTrack
+----måste ta bort foreign key
+--drop constraint FK_PlaylistTrackPlaylistId 
+
+----delete from PlayList
+
+--select *
+--from Playlist
+
+--RESTORE DATABASE Chinook  
+--   FROM DISK = 'C:\Project\AcceleratedLearning\SQL\testDB.bak' ; 
+
+--select *
+--from PlayList
+
+--4) EXTRA
+--Använd transaktioner för att lösa denna uppgift.
+--Lägg till 5 artister i Artist-tabellen.
+--Ångra sedan transaktionen så de 5 artisterna inte läggs in. (använd alltså inte "delete" i denna uppgift)
+
+-- Om något skiter sig, tex strömmen går, så blir inget halvgjort utan då går allt tillbaka till ursprungliga stadiet
+--begin transaction
+--insert into Artist(Name)
+--values ('Bruno Mars'),('Måns Zelmerlöw'),('Eric Saade'),('Michael Bublé')
+
+--select  Name 
+--from Artist
+--where Name = 'Måns Zelmerlöw' OR Name = 'Eric Saade' OR Name = 'Bruno Mars' OR Name = 'Michael Bublé'
+
+--rollback;
+
+--5) EXTRA - SVÅR!
+--Lista alla artister och hur många spellistor de är med i.
+
+Select Artist.Name as Name, count(PlayList.Name)
+from Artist
+full join Album on Artist.ArtistId = Album.ArtistId
+full join Track on Album.AlbumId = Track.AlbumId
+full join PlaylistTrack on Track.TrackId = PlayListTrack.TrackId
+full join PlayList on PlayListTrack.PlayListId = PlayList.PLayListId
+
